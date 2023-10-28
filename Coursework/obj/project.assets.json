@@ -199,11 +199,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/irfan/Desktop/HWUD/F20SC/Coursework/Coursework.csproj",
+      "projectUniqueName": "/Users/irfan/Desktop/HWUD/F20SC/SC_CW/Coursework/Coursework.csproj",
       "projectName": "Coursework",
-      "projectPath": "/Users/irfan/Desktop/HWUD/F20SC/Coursework/Coursework.csproj",
+      "projectPath": "/Users/irfan/Desktop/HWUD/F20SC/SC_CW/Coursework/Coursework.csproj",
       "packagesPath": "/Users/irfan/.nuget/packages/",
-      "outputPath": "/Users/irfan/Desktop/HWUD/F20SC/Coursework/obj/",
+      "outputPath": "/Users/irfan/Desktop/HWUD/F20SC/SC_CW/Coursework/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/Users/irfan/.nuget/NuGet/NuGet.Config"

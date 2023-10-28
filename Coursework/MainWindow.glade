@@ -75,11 +75,13 @@
             </child>
 
             <child>
-              <object class="GtkButton" id="SettingsButton">
-                <!-- &#x2699;&#xFE0F; -->
-                <property name="label" translatable="yes">settings</property>
+              <object class="GtkMenuButton" id="HistoryButton">
+                <!-- &#x1F3F7;&#xFE0F; -->
+                <property name="label">History</property>
                 <property name="visible">True</property>
                 <property name="hexpand">False</property>
+                <property name="popover">HistoryPopover</property>
+                <property name="tooltip-text" translatable="yes">History</property>
               </object>
             </child>
           </object>
@@ -204,6 +206,80 @@
           <object class="GtkButton" id="AddFavoriteButton">
             <property name="label" translatable="yes">Add to Favorites</property>
             <property name="visible">True</property>
+          </object>
+        </child>
+      </object>
+    </child>
+  </object>
+
+  <object class="GtkPopover" id="HistoryPopover">
+    <child>
+      <object class="GtkBox">
+        <property name="orientation">vertical</property>
+        <property name="visible">True</property>
+
+        <!-- Scrollable Window for History -->
+        <child>
+          <object class="GtkScrolledWindow" id="HistoryScrolledWindow">
+            <property name="visible">True</property>
+            <property name="vexpand">False</property>
+            <property name="hexpand">True</property>
+            <property name="min-content-height">180</property>
+            <property name="hscrollbar-policy">never</property>
+            <property name="vscrollbar-policy">automatic</property>
+
+            <child>
+              <object class="GtkGrid">
+                <property name="visible">True</property>
+                <property name="row-spacing">6</property>
+                <property name="column-spacing">12</property>
+
+                <!-- Sample History -->
+                <child>
+                  <object class="GtkButton">
+                    <property name="label" translatable="yes">https://example.com</property>
+                    <property name="visible">True</property>
+                    <property name="relief">none</property>
+                  </object>
+                  <packing>
+                    <property name="left-attach">0</property>
+                    <property name="top-attach">0</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkButton">
+                    <property name="label" translatable="yes">Delete</property>
+                    <property name="visible">True</property>
+                  </object>
+                  <packing>
+                    <property name="left-attach">1</property>
+                    <property name="top-attach">0</property>
+                  </packing>
+                </child>
+
+                <child>
+                  <object class="GtkButton">
+                    <property name="label" translatable="yes">https://openai.com</property>
+                    <property name="visible">True</property>
+                    <property name="relief">none</property>
+                  </object>
+                  <packing>
+                    <property name="left-attach">0</property>
+                    <property name="top-attach">1</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkButton">
+                    <property name="label" translatable="yes">Delete</property>
+                    <property name="visible">True</property>
+                  </object>
+                  <packing>
+                    <property name="left-attach">1</property>
+                    <property name="top-attach">1</property>
+                  </packing>
+                </child>
+              </object>
+            </child>
           </object>
         </child>
       </object>

@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "22yRySEfDWZCqU3z+e7mvLwHmXXcNALLXwku9lCnxYletg89qac5KoIH7DNXpPDZtBj3roOHqAwfH46+npWNMQ==",
+  "dgSpecHash": "laSprZEJnPOm8cZp/vV9cRb3pbfLCnAxWD3I+HjqQlAJNdeQx7Tjm49A7OKdV+xCE+mfAOWzjZ5cIhx4JTIv7w==",
   "success": true,
-  "projectFilePath": "/Users/irfan/Desktop/HWUD/F20SC/Coursework/Coursework.csproj",
+  "projectFilePath": "/Users/irfan/Desktop/HWUD/F20SC/SC_CW/Coursework/Coursework.csproj",
   "expectedPackageFiles": [
     "/Users/irfan/.nuget/packages/atksharp/3.24.24.95/atksharp.3.24.24.95.nupkg.sha512",
     "/Users/irfan/.nuget/packages/cairosharp/3.24.24.95/cairosharp.3.24.24.95.nupkg.sha512",
