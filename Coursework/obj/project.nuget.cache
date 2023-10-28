@@ -1,0 +1,19 @@
+{
+  "version": 2,
+  "dgSpecHash": "22yRySEfDWZCqU3z+e7mvLwHmXXcNALLXwku9lCnxYletg89qac5KoIH7DNXpPDZtBj3roOHqAwfH46+npWNMQ==",
+  "success": true,
+  "projectFilePath": "/Users/irfan/Desktop/HWUD/F20SC/Coursework/Coursework.csproj",
+  "expectedPackageFiles": [
+    "/Users/irfan/.nuget/packages/atksharp/3.24.24.95/atksharp.3.24.24.95.nupkg.sha512",
+    "/Users/irfan/.nuget/packages/cairosharp/3.24.24.95/cairosharp.3.24.24.95.nupkg.sha512",
+    "/Users/irfan/.nuget/packages/gdksharp/3.24.24.95/gdksharp.3.24.24.95.nupkg.sha512",
+    "/Users/irfan/.nuget/packages/giosharp/3.24.24.95/giosharp.3.24.24.95.nupkg.sha512",
+    "/Users/irfan/.nuget/packages/glibsharp/3.24.24.95/glibsharp.3.24.24.95.nupkg.sha512",
+    "/Users/irfan/.nuget/packages/gtksharp/3.24.24.95/gtksharp.3.24.24.95.nupkg.sha512",
+    "/Users/irfan/.nuget/packages/pangosharp/3.24.24.95/pangosharp.3.24.24.95.nupkg.sha512",
+    "/Users/irfan/.nuget/packages/microsoft.netcore.app.ref/6.0.23/microsoft.netcore.app.ref.6.0.23.nupkg.sha512",
+    "/Users/irfan/.nuget/packages/microsoft.aspnetcore.app.ref/6.0.23/microsoft.aspnetcore.app.ref.6.0.23.nupkg.sha512",
+    "/Users/irfan/.nuget/packages/microsoft.netcore.app.host.osx-arm64/6.0.23/microsoft.netcore.app.host.osx-arm64.6.0.23.nupkg.sha512"
+  ],
+  "logs": []
+}
