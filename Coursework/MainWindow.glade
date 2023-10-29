@@ -250,12 +250,11 @@
             <property name="vscrollbar-policy">automatic</property>
 
             <child>
-              <object class="GtkGrid">
+              <object class="GtkGrid" id="HistoryGrid">
                 <property name="visible">True</property>
                 <property name="row-spacing">6</property>
                 <property name="column-spacing">12</property>
 
-                <!-- Sample History -->
                 <child>
                   <object class="GtkButton">
                     <property name="label" translatable="yes">https://example.com</property>
@@ -267,38 +266,7 @@
                     <property name="top-attach">0</property>
                   </packing>
                 </child>
-                <child>
-                  <object class="GtkButton">
-                    <property name="label" translatable="yes">Delete</property>
-                    <property name="visible">True</property>
-                  </object>
-                  <packing>
-                    <property name="left-attach">1</property>
-                    <property name="top-attach">0</property>
-                  </packing>
-                </child>
 
-                <child>
-                  <object class="GtkButton">
-                    <property name="label" translatable="yes">https://openai.com</property>
-                    <property name="visible">True</property>
-                    <property name="relief">none</property>
-                  </object>
-                  <packing>
-                    <property name="left-attach">0</property>
-                    <property name="top-attach">1</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkButton">
-                    <property name="label" translatable="yes">Delete</property>
-                    <property name="visible">True</property>
-                  </object>
-                  <packing>
-                    <property name="left-attach">1</property>
-                    <property name="top-attach">1</property>
-                  </packing>
-                </child>
               </object>
             </child>
           </object>

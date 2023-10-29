@@ -10,22 +10,55 @@ namespace Coursework
 {
     class MainWindow : Gtk.Window
     {
+        private Builder builder;
+        //making obejcts for the widgets
         private Entry url_input;
         private TextView display;
+        //making URL objects
         private URL urlObj;
         private URL homeUrl = new URL("https://www.hw.ac.uk");
+
+        //objects for the download button
         private Entry fileInput;
         private Label downloadLabel;
+
+        //list for history
+        private List<URL> history = new List<URL>();
+        int index = 0;
+
         public MainWindow() : this(new Builder("MainWindow.glade")) { }
 
         private MainWindow(Builder builder) : base(builder.GetRawOwnedObject("MainWindow"))
         {
+            this.builder = builder;
             builder.Autoconnect(this);
             //InitializeSetHomePageDialog(builder);
 
             url_input = (Entry)builder.GetObject("UrlBar");
             display = (TextView)builder.GetObject("DisplayScreen");
             pageUpdate(homeUrl.GetURL);
+
+            //back button
+            Button backButton = (Button)builder.GetObject("PrevButton");
+            backButton.Clicked += (sender, e) =>
+            {
+                if (index > 1)
+                {
+                    index--;
+                    pageUpdate(history[index - 1].GetURL);
+                }
+            };
+
+            //forward button    
+            Button forwardButton = (Button)builder.GetObject("NextButton");
+            forwardButton.Clicked += (sender, e) =>
+            {
+                if (index < history.Count)
+                {
+                    index++;
+                    pageUpdate(history[index - 1].GetURL);
+                }
+            };
 
             //go button
             Button goButton = (Button)builder.GetObject("GoButton");
@@ -40,9 +73,7 @@ namespace Coursework
             {
                 if (e.Event.Type == Gdk.EventType.TwoButtonPress)
                 {
-                    Console.WriteLine(homeUrl.GetURL);
                     SetNewHomepage window = new SetNewHomepage(homeUrl);
-                    Console.WriteLine(homeUrl.GetURL);
                 }
             };
 
@@ -70,6 +101,26 @@ namespace Coursework
             display.Buffer.Text = urlResult;
             string pageTitle = urlObj.GetPageTitle;
             this.Title = pageTitle;
+            historyUpdate(urlObj);
+        }
+
+        private void historyUpdate(URL urlObj)
+        {
+            if (urlObj.GetStatusCode != 0)
+            {
+                if (history.Count == 0)
+                {
+                    history.Add(urlObj);
+                    index++;
+                }
+                else
+            if (history[index - 1].GetURL != urlObj.GetURL)
+                {
+                    history.Add(urlObj);
+                    index++;
+                }
+            }
+            updateHistoryUI(history, builder);
         }
 
         private void contentUpdate(URL homeUrl)
@@ -97,7 +148,6 @@ namespace Coursework
         {
             string urlText = urlObj.GetURL;
             pageUpdate(urlText);
-            Console.WriteLine("Refreshed");
         }
 
         private void downloadButton_Clicked(object sender, EventArgs e)
@@ -108,13 +158,9 @@ namespace Coursework
                 filepath = "bulk.txt";
             }
             readwrite rw = new readwrite(filepath);
-
             string[] file_urls;
-
             file_urls = rw.read();
-
             string write_file = "";
-
 
             try
             {
@@ -138,7 +184,50 @@ namespace Coursework
             {
                 downloadLabel.Text = "File Download Failed!";
             }
+        }
 
+        private void updateHistoryUI(List<URL> history, Builder builder)
+        {
+            Gtk.Grid historyGrid = (Gtk.Grid)builder.GetObject("HistoryGrid");
+
+            foreach (Widget child in historyGrid.Children)
+            {
+                historyGrid.Remove(child);
+                child.Destroy();
+            }
+            int rowIndex = 0;
+
+            List<URL> reversedHistory = new List<URL>(history);
+            reversedHistory.Reverse();
+
+            foreach (URL website in reversedHistory)
+            {
+                // Create the site button
+                Gtk.Button siteButton = new Gtk.Button(website.GetPageTitle);
+                siteButton.Relief = Gtk.ReliefStyle.None;
+                siteButton.Clicked += (sender, e) =>
+                {
+                    pageUpdate(website.GetURL);
+                };
+
+                // Add siteButton to the grid at rowIndex and column 0
+                historyGrid.Attach(siteButton, 0, rowIndex, 1, 1);
+
+                // Create the delete button
+                Gtk.Button deleteButton = new Gtk.Button("Delete");
+                deleteButton.Clicked += (sender, e) =>
+                {
+                    history.Remove(website);
+                    updateHistoryUI(history, builder);
+                };
+
+                // Add deleteButton to the grid at rowIndex and column 1
+                historyGrid.Attach(deleteButton, 1, rowIndex, 1, 1);
+
+                rowIndex++; // Move to the next row for the next website
+            };
+
+            historyGrid.ShowAll();
         }
 
         private void Window_DeleteEvent(object sender, DeleteEventArgs a)
