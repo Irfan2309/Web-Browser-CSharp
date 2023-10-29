@@ -4,8 +4,10 @@ using System.Threading.Tasks.Dataflow;
 
 namespace Coursework
 {
+    // Class to read and write to a file
     public class readwrite
     {
+        // Initializing the variable for the file path
         private string filePath;
 
         public readwrite(string filePath)
@@ -13,6 +15,7 @@ namespace Coursework
             this.filePath = filePath;
         }
 
+        // Function to read the file
         public string[] read()
         {
             try
@@ -35,6 +38,7 @@ namespace Coursework
             }
         }
 
+        // Function to write to the file
         public void write(string writePath, string file)
         {
             try

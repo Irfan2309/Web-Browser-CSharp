@@ -6,7 +6,7 @@ namespace Coursework
 {
     public class URL
     {
-        // Initializing the variables: page url, page title, page content, status code
+        // Initializing the variables: page url, page title, page content, status code, file size
         private string pageUrl, pageTitle, pageContent;
         private int statusCode;
         private int bytes;
@@ -19,7 +19,7 @@ namespace Coursework
             pageTitle = GetTitle(pageContent);
         }
 
-        // Function to retrieve the page content and also set the status code
+        // Function to retrieve the page content and also set the status code and file size
         public string GetContent(string url)
         {
             HttpClient client = new HttpClient();
@@ -54,14 +54,10 @@ namespace Coursework
             }
             catch (HttpRequestException e)
             {
-                // Console.WriteLine("ERROROROOOROOROROROOROROROROROOROROROR" + e.Message);
-                // Console.WriteLine("ERROROROOOROOROROROOROROROROROOROROROR" + e.InnerException.Message);
                 return "HTTP Request Error: " + e.Message;
             }
             catch (Exception e)
             {
-                // Console.WriteLine("ERROROROOOROOROROROOROROROROROOROROROR" + e.Message);
-                // Console.WriteLine("ERROROROOOROOROROROOROROROROROOROROROR" + e.InnerException.Message);
                 return "Error: " + e.Message;
             }
 
@@ -72,9 +68,11 @@ namespace Coursework
         {
             try
             {
+                // Getting the title of the page between the <title> tags
                 string begin = "<title>";
                 string end = "</title>";
 
+                //trimming the title due to potential whitespace like in the case of https://www.hw.ac.uk
                 int start = content.IndexOf(begin, StringComparison.OrdinalIgnoreCase);
                 int stop = content.IndexOf(end, start, StringComparison.OrdinalIgnoreCase);
 
@@ -90,9 +88,6 @@ namespace Coursework
             }
             catch (Exception)
             {
-
-                // Console.WriteLine("ERROROROOOROOROROROOROROROROROOROROROR" + e.Message);
-                // Console.WriteLine("ERROROROOOROOROROROOROROROROROOROROROR" + e.InnerException.Message);
                 return "Untitled Page";
             }
 

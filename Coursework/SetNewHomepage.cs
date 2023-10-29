@@ -3,13 +3,15 @@ using System;
 
 namespace Coursework
 {
+    // Class to set a new homepage for the browser with a dialog box
     public class SetNewHomepage : Gtk.Window
     {
         private Entry urlInput;
 
         public SetNewHomepage(URL homeurl) : base(Gtk.WindowType.Toplevel)
         {
-            SetDefaultSize(300, 100);
+            //set the size of the window
+            SetDefaultSize(300, 150);
 
             // Create label
             Label label = new Label("Edit Home Page");
@@ -22,6 +24,7 @@ namespace Coursework
             Button submitButton = new Button("Submit");
             Button cancelButton = new Button("Cancel");
 
+            //event handler for clicking the submit button
             submitButton.Clicked += (sender, e) =>
             {
                 homeurl.GetURL = urlInput.Text;
@@ -35,24 +38,24 @@ namespace Coursework
                 this.Close();
             };
 
+            //event handler for clicking the cancel button
             cancelButton.Clicked += (sender, e) =>
             {
-                this.Close(); // Close the window without saving
+                this.Close();
             };
 
-            // Create a layout container (e.g., a VBox)
+            //creating the UI for the dialog box
             Box layout = new Box(Orientation.Vertical, 0);
             layout.PackStart(label, false, false, 0);
             layout.PackStart(urlInput, false, false, 0);
 
-            // Create a horizontal box for buttons
+            // submit and cancel buttons
             Box buttonBox = new Box(Orientation.Horizontal, 0);
             buttonBox.PackStart(submitButton, false, false, 0);
             buttonBox.PackStart(cancelButton, false, false, 0);
 
             layout.PackStart(buttonBox, false, false, 0);
 
-            // Add the layout to the window
             Add(layout);
 
             ShowAll();

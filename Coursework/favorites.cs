@@ -8,6 +8,7 @@ namespace Coursework
 {
     public class favorites
     {
+        //favorites class will contain the name of the favorite and the URL object
         private string name_given;
         private URL UrlObj;
 
@@ -17,6 +18,7 @@ namespace Coursework
             UrlObj = new URL(url);
         }
 
+        //getters and setters for the name and URL object
         public string getName
         {
             get { return name_given; }
