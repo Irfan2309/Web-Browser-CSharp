@@ -26,6 +26,8 @@ namespace Coursework
         private List<URL> history = new List<URL>();
         int index = 0;
 
+        private List<favorites> favoritesList = new List<favorites>();
+
         public MainWindow() : this(new Builder("MainWindow.glade")) { }
 
         private MainWindow(Builder builder) : base(builder.GetRawOwnedObject("MainWindow"))
@@ -40,25 +42,11 @@ namespace Coursework
 
             //back button
             Button backButton = (Button)builder.GetObject("PrevButton");
-            backButton.Clicked += (sender, e) =>
-            {
-                if (index > 1)
-                {
-                    index--;
-                    pageUpdate(history[index - 1].GetURL);
-                }
-            };
+            backButton.Clicked += (sender, e) => { goBack(); };
 
             //forward button    
             Button forwardButton = (Button)builder.GetObject("NextButton");
-            forwardButton.Clicked += (sender, e) =>
-            {
-                if (index < history.Count)
-                {
-                    index++;
-                    pageUpdate(history[index - 1].GetURL);
-                }
-            };
+            forwardButton.Clicked += (sender, e) => { goNext(); };
 
             //go button
             Button goButton = (Button)builder.GetObject("GoButton");
@@ -81,6 +69,13 @@ namespace Coursework
             Button refreshButton = (Button)builder.GetObject("RefreshButton");
             refreshButton.Clicked += (sender, e) => refreshButton_Clicked(urlObj);
 
+            //favorite button 
+            Button favoriteButton = (Button)builder.GetObject("AddFavoriteButton");
+            favoriteButton.Clicked += (sender, e) =>
+            {
+                AddToFavorites window = new AddToFavorites(favoritesList, urlObj, index, "add");
+                window.Added += addFavorites_Clicked;
+            };
 
             //download button
 
@@ -90,6 +85,10 @@ namespace Coursework
 
             Button downloadButton = (Button)builder.GetObject("DownloadButton");
             downloadButton.Clicked += downloadButton_Clicked;
+
+
+            updateHistoryUI(history, builder);
+            updateFavoritesUI(favoritesList, builder);
 
         }
 
@@ -106,6 +105,7 @@ namespace Coursework
 
         private void historyUpdate(URL urlObj)
         {
+
             if (urlObj.GetStatusCode != 0)
             {
                 if (history.Count == 0)
@@ -131,6 +131,31 @@ namespace Coursework
             this.Title = pageTitle;
         }
 
+        private void goBack()
+        {
+            if (index > 1)
+            {
+                index--;
+                pageUpdate(history[index - 1].GetURL);
+            }
+            else
+            {
+                pageUpdate(homeUrl.GetURL);
+            }
+        }
+
+        private void goNext()
+        {
+            if (index < history.Count)
+            {
+                index++;
+                pageUpdate(history[index - 1].GetURL);
+            }
+            else
+            {
+                pageUpdate(homeUrl.GetURL);
+            }
+        }
         private void goHome_Clicked(object sender, EventArgs e)
         {
 
@@ -229,6 +254,63 @@ namespace Coursework
 
             historyGrid.ShowAll();
         }
+
+
+        private void addFavorites_Clicked(object sender, EventArgs e)
+        {
+            updateFavoritesUI(favoritesList, builder);
+        }
+
+        private void updateFavoritesUI(List<favorites> favoritesList, Builder builder)
+        {
+            Gtk.Grid favoritesGrid = (Gtk.Grid)builder.GetObject("FavoritesGrid");
+            foreach (Widget child in favoritesGrid.Children)
+            {
+                favoritesGrid.Remove(child);
+                child.Destroy();
+            }
+            for (int i = 0; i < favoritesList.Count; i++)
+            {
+                favorites favorite = favoritesList[i];
+
+                // Create the favorite button
+                Button favoriteButton = new Button();
+                favoriteButton.Label = favorite.getName;
+                favoriteButton.Relief = ReliefStyle.None;
+                favoritesGrid.Attach(favoriteButton, 0, i, 1, 1);
+
+                favoriteButton.Clicked += (sender, e) =>
+                {
+                    pageUpdate(favorite.getUrl.GetURL);
+                };
+
+                // Create the edit button
+                Button editButton = new Button("Edit");
+                favoritesGrid.Attach(editButton, 1, i, 1, 1);
+
+                // Assign the edit button event
+                editButton.Clicked += (sender, e) =>
+                {
+                    AddToFavorites window = new AddToFavorites(favoritesList, null, i, "edit");
+                    window.Added += addFavorites_Clicked;
+                };
+
+                // Create the delete button
+                Button deleteButton = new Button("Delete");
+                favoritesGrid.Attach(deleteButton, 2, i, 1, 1);
+
+                // Assign the delete button event
+                deleteButton.Clicked += (sender, e) =>
+                {
+                    favoritesList.Remove(favorite);
+                    updateFavoritesUI(favoritesList, builder);
+                };
+            }
+            favoritesGrid.ShowAll();
+        }
+
+
+
 
         private void Window_DeleteEvent(object sender, DeleteEventArgs a)
         {

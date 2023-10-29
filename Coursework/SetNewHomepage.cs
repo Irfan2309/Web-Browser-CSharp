@@ -16,7 +16,7 @@ namespace Coursework
 
             // Create input field
             urlInput = new Entry();
-            urlInput.Text = homeurl.GetURL; // Assuming homeURL is a variable with the URL
+            urlInput.Text = homeurl.GetURL;
 
             // Create buttons
             Button submitButton = new Button("Submit");
