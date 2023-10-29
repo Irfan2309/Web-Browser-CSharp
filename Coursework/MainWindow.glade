@@ -64,6 +64,16 @@
             </child>
 
             <child>
+              <object class="GtkButton" id="RefreshButton">
+                <!-- &#x1F504; -->
+                <property name="label" translatable="yes">refresh</property>
+                <property name="visible">True</property>
+                <property name="hexpand">False</property>
+                <property name="tooltip-text" translatable="yes">Refresh</property>
+              </object>
+            </child>
+
+            <child>
               <object class="GtkMenuButton" id="FavoriteButton">
                 <!-- &#x1F3F7;&#xFE0F; -->
                 <property name="label">favorite</property>
@@ -303,13 +313,10 @@
         <property name="orientation">vertical</property>
         <property name="visible">True</property>
         <property name="spacing">6</property>
-
-        <!-- Entry for File Name -->
         <child>
-          <object class="GtkLabel">
+          <object class="GtkLabel" id="DownloadLabel">
             <property name="visible">True</property>
             <property name="label" translatable="yes">Enter File Name</property>
-            <!-- padding -->
             <property name="margin-left">12</property>
             <property name="margin-right">12</property>
             <property name="margin-top">12</property>
@@ -321,11 +328,9 @@
             <property name="placeholder-text" translatable="yes">Enter file name...</property>
           </object>
         </child>
-
-        <!-- Download Button -->
         <child>
           <object class="GtkButton" id="DownloadButton">
-            <property name="label" translatable="yes">Download</property>
+            <property name="label" translatable="yes">Submit</property>
             <property name="visible">True</property>
           </object>
         </child>

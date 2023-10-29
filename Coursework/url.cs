@@ -2,13 +2,14 @@ using System;
 using System.Net.Http;
 using Gtk;
 
-namespace WebBrowser
+namespace Coursework
 {
     public class URL
     {
         // Initializing the variables: page url, page title, page content, status code
         private string pageUrl, pageTitle, pageContent;
         private int statusCode;
+        private int bytes;
 
         // Setting these variables for the input url
         public URL(string url)
@@ -26,6 +27,9 @@ namespace WebBrowser
             {
                 HttpResponseMessage response = client.GetAsync(url).Result;
                 this.statusCode = (int)response.StatusCode;
+
+                byte[] file_size = response.Content.ReadAsByteArrayAsync().Result;
+                this.bytes = file_size.Length;
 
                 if (statusCode == 200)
                 {
@@ -50,14 +54,14 @@ namespace WebBrowser
             }
             catch (HttpRequestException e)
             {
-                Console.WriteLine("ERROROROOOROOROROROOROROROROROOROROROR" + e.Message);
-                Console.WriteLine("ERROROROOOROOROROROOROROROROROOROROROR" + e.InnerException.Message);
+                // Console.WriteLine("ERROROROOOROOROROROOROROROROROOROROROR" + e.Message);
+                // Console.WriteLine("ERROROROOOROOROROROOROROROROROOROROROR" + e.InnerException.Message);
                 return "HTTP Request Error: " + e.Message;
             }
             catch (Exception e)
             {
-                Console.WriteLine("ERROROROOOROOROROROOROROROROROOROROROR" + e.Message);
-                Console.WriteLine("ERROROROOOROOROROROOROROROROROOROROROR" + e.InnerException.Message);
+                // Console.WriteLine("ERROROROOOROOROROROOROROROROROOROROROR" + e.Message);
+                // Console.WriteLine("ERROROROOOROOROROROOROROROROROOROROROR" + e.InnerException.Message);
                 return "Error: " + e.Message;
             }
 
@@ -77,19 +81,19 @@ namespace WebBrowser
                 if (start != -1 && stop != -1)
                 {
                     string title = content.Substring(start + begin.Length, stop - start - begin.Length);
-                    return title.Trim();
+                    return statusCode + " " + title.Trim();
                 }
                 else
                 {
                     return "Untitled Page";
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
 
-                Console.WriteLine("ERROROROOOROOROROROOROROROROROOROROROR" + e.Message);
-                Console.WriteLine("ERROROROOOROOROROROOROROROROROOROROROR" + e.InnerException.Message);
-                return "Error: " + e.Message;
+                // Console.WriteLine("ERROROROOOROOROROROOROROROROROOROROROR" + e.Message);
+                // Console.WriteLine("ERROROROOOROOROROROOROROROROROOROROROR" + e.InnerException.Message);
+                return "Untitled Page";
             }
 
         }
@@ -111,6 +115,12 @@ namespace WebBrowser
         public int GetStatusCode
         {
             get { return statusCode; }
+        }
+
+        //getter function for bytes
+        public int GetBytes
+        {
+            get { return bytes; }
         }
 
         //getter function for page title
