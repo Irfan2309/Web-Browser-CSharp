@@ -31,6 +31,7 @@ namespace Coursework
                 label = new Label("Edit Favorite");
             }
 
+            // Create labels
             Label urlLabel = new Label("Enter URL:");
             Label nameLabel = new Label("Enter Name:");
 

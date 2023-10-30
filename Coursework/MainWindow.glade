@@ -18,8 +18,7 @@
 
             <child>
               <object class="GtkButton" id="PrevButton">
-                <!-- &#x25C0; -->
-                <property name="label" translatable="yes">prev</property>
+                <property name="label" translatable="yes">&#x25C0;</property>
                 <property name="visible">True</property>
                 <property name="hexpand">False</property>
                 <property name="tooltip-text" translatable="yes">Go to previous page</property>
@@ -28,8 +27,7 @@
 
             <child>
               <object class="GtkButton" id="NextButton">
-                <!-- &#x25B6; -->
-                <property name="label" translatable="yes">next</property>
+                <property name="label" translatable="yes">&#x25B6;</property>
                 <property name="visible">True</property>
                 <property name="hexpand">False</property>
                 <property name="tooltip-text" translatable="yes">Go to next page</property>
@@ -38,8 +36,7 @@
 
             <child>
               <object class="GtkButton" id="HomeButton">
-                <!-- &#x1F3E0; -->
-                <property name="label" translatable="yes">home</property>
+                <property name="label" translatable="yes">&#x1F3E0;</property>
                 <property name="visible">True</property>
                 <property name="hexpand">False</property>
                 <property name="tooltip-text" translatable="yes">Home</property>
@@ -56,8 +53,7 @@
 
             <child>
               <object class="GtkButton" id="GoButton">
-                <!-- &#x1F50D; -->
-                <property name="label" translatable="yes">go</property>
+                <property name="label" translatable="yes">&#x1F50D;</property>
                 <property name="visible">True</property>
                 <property name="hexpand">False</property>
               </object>
@@ -65,8 +61,7 @@
 
             <child>
               <object class="GtkButton" id="RefreshButton">
-                <!-- &#x1F504; -->
-                <property name="label" translatable="yes">refresh</property>
+                <property name="label" translatable="yes">&#x1F503;</property>
                 <property name="visible">True</property>
                 <property name="hexpand">False</property>
                 <property name="tooltip-text" translatable="yes">Refresh</property>
@@ -76,7 +71,7 @@
             <child>
               <object class="GtkMenuButton" id="FavoriteButton">
                 <!-- &#x1F3F7;&#xFE0F; -->
-                <property name="label">favorite</property>
+                <property name="label">&#x1F3F7;&#xFE0F;</property>
                 <property name="visible">True</property>
                 <property name="hexpand">False</property>
                 <property name="popover">FavoritesPopover</property>
@@ -86,8 +81,7 @@
 
             <child>
               <object class="GtkMenuButton" id="HistoryButton">
-                <!-- &#x1F3F7;&#xFE0F; -->
-                <property name="label">History</property>
+                <property name="label">&#x1F552;</property>
                 <property name="visible">True</property>
                 <property name="hexpand">False</property>
                 <property name="popover">HistoryPopover</property>
@@ -97,8 +91,7 @@
 
             <child>
               <object class="GtkMenuButton" id="BulkDownloadButton">
-                <!-- &#x1F3F7;&#xFE0F; -->
-                <property name="label">Download</property>
+                <property name="label">&#x2193;</property>
                 <property name="visible">True</property>
                 <property name="hexpand">False</property>
                 <property name="popover">DownloadPopover</property>
@@ -142,15 +135,17 @@
           <object class="GtkScrolledWindow">
             <property name="visible">True</property>
             <property name="min-content-height">180</property>
+            <property name="min-content-width">200</property>
             <property name="hscrollbar-policy">never</property>
             <property name="vscrollbar-policy">automatic</property>
             <child>
               <object class="GtkGrid" id="FavoritesGrid">
                 <property name="visible">True</property>
+                <property name="width-request">180</property>
                 <property name="row-spacing">10</property>
                 <property name="column-spacing">10</property>
 
-                <!-- Favorite 1 -->
+                <!-- sample favorite so the grid isnt empty -->
                 <child>
                   <object class="GtkButton">
                     <property name="label" translatable="yes">https://example.com</property>
@@ -217,9 +212,11 @@
             <child>
               <object class="GtkGrid" id="HistoryGrid">
                 <property name="visible">True</property>
+                <property name="width-request">180</property>
                 <property name="row-spacing">6</property>
                 <property name="column-spacing">12</property>
 
+                <!-- sample history just so it is not empty -->
                 <child>
                   <object class="GtkButton">
                     <property name="label" translatable="yes">https://example.com</property>
@@ -231,11 +228,18 @@
                     <property name="top-attach">0</property>
                   </packing>
                 </child>
-
               </object>
             </child>
           </object>
         </child>
+        <child>
+
+          <object class="GtkButton" id="ClearHistoryButton">
+            <property name="label" translatable="yes">Clear History</property>
+            <property name="visible">True</property>
+          </object>
+        </child>
+
       </object>
     </child>
   </object>

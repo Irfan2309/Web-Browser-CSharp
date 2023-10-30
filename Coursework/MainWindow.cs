@@ -31,6 +31,7 @@ namespace Coursework
         //list for favorites with favorite objects
         private List<favorites> favoritesList = new List<favorites>();
 
+
         public MainWindow() : this(new Builder("MainWindow.glade")) { }
 
         private MainWindow(Builder builder) : base(builder.GetRawOwnedObject("MainWindow"))
@@ -87,6 +88,16 @@ namespace Coursework
 
             //bulk download button
             downloadLabel = (Label)builder.GetObject("DownloadLabel");
+
+            //clear history button
+            Button clearHistoryButton = (Button)builder.GetObject("ClearHistoryButton");
+            clearHistoryButton.Clicked += (sender, e) =>
+            {
+                //clear the history list and update the UI
+                history.Clear();
+                this.index = 0;
+                updateHistoryUI(history, builder);
+            };
 
             //file input for bulk download
             fileInput = (Entry)builder.GetObject("FileNameEntry");
