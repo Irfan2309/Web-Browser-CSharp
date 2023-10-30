@@ -11,6 +11,10 @@ namespace Coursework
     class MainWindow : Gtk.Window
     {
         private Builder builder;
+
+        //accelerator group for keyboard shortcuts
+        private AccelGroup accelGroup;
+
         //making obejcts for the widgets
         private Entry url_input;
         private TextView display;
@@ -39,6 +43,12 @@ namespace Coursework
             this.builder = builder;
             builder.Autoconnect(this);
 
+
+            //adding the accelerator group for keyboard shortcuts
+            //made for go home, refresh
+            accelGroup = new AccelGroup();
+            this.AddAccelGroup(accelGroup);
+
             //objects for the widgets
             url_input = (Entry)builder.GetObject("UrlBar");
             display = (TextView)builder.GetObject("DisplayScreen");
@@ -64,7 +74,10 @@ namespace Coursework
 
             //home button
             Button goHome = (Button)builder.GetObject("HomeButton");
+            //keyboard shortcut for home button: ctrl + h
+            goHome.AddAccelerator("clicked", accelGroup, new AccelKey(Gdk.Key.h, Gdk.ModifierType.ControlMask, AccelFlags.Visible));
             goHome.Clicked += goHome_Clicked;
+            //event handling for double clicking the home button
             goHome.ButtonPressEvent += (sender, e) =>
             {
                 //if double clicked, open the dialog box to set a new homepage
@@ -76,6 +89,8 @@ namespace Coursework
 
             //refresh button
             Button refreshButton = (Button)builder.GetObject("RefreshButton");
+            //keyboard shortcut for refresh button: ctrl + r
+            refreshButton.AddAccelerator("clicked", accelGroup, new AccelKey(Gdk.Key.r, Gdk.ModifierType.ControlMask, AccelFlags.Visible));
             refreshButton.Clicked += (sender, e) => refreshButton_Clicked(urlObj);
 
             //favorite button, opens the popover and event handling for clicking the add button there
@@ -85,9 +100,6 @@ namespace Coursework
                 AddToFavorites window = new AddToFavorites(favoritesList, urlObj, index, "add");
                 window.Added += addFavorites_Clicked;
             };
-
-            //bulk download button
-            downloadLabel = (Label)builder.GetObject("DownloadLabel");
 
             //clear history button
             Button clearHistoryButton = (Button)builder.GetObject("ClearHistoryButton");
@@ -104,6 +116,8 @@ namespace Coursework
             //event handling for enter key press
             fileInput.Activated += (sender, e) => downloadButton_Clicked(sender, e);
 
+            //bulk download button
+            downloadLabel = (Label)builder.GetObject("DownloadLabel");
             //download button
             Button downloadButton = (Button)builder.GetObject("DownloadButton");
             downloadButton.Clicked += downloadButton_Clicked;
@@ -135,6 +149,36 @@ namespace Coursework
 
             //update the history with the new URL object
             historyUpdate(urlObj);
+            sensitivitySet();
+        }
+
+
+        //------------------------------------------------------------------------------------
+        //------------------------------------------------------------------------------------
+        //SENSITIVITY FUNCTIONS - SET SENSITIVITY FOR BACK AND FORWARD BUTTONS
+        private void sensitivitySet()
+        {
+            if (index == 1)
+            {
+                Button backButton = (Button)builder.GetObject("PrevButton");
+                backButton.Sensitive = false;
+            }
+            else
+            {
+                Button backButton = (Button)builder.GetObject("PrevButton");
+                backButton.Sensitive = true;
+            }
+
+            if (index == history.Count)
+            {
+                Button forwardButton = (Button)builder.GetObject("NextButton");
+                forwardButton.Sensitive = false;
+            }
+            else
+            {
+                Button forwardButton = (Button)builder.GetObject("NextButton");
+                forwardButton.Sensitive = true;
+            }
         }
 
         //------------------------------------------------------------------------------------
