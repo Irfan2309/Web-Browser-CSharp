@@ -1,5 +1,6 @@
 using Gtk;
 using System;
+using System.IO;
 
 namespace Coursework
 {
@@ -7,7 +8,6 @@ namespace Coursework
     public class SetNewHomepage : Gtk.Window
     {
         private Entry urlInput;
-
         public SetNewHomepage(URL homeurl) : base(Gtk.WindowType.Toplevel)
         {
             //set the size of the window
@@ -27,14 +27,23 @@ namespace Coursework
             //event handler for clicking the submit button
             submitButton.Clicked += (sender, e) =>
             {
-                homeurl.GetURL = urlInput.Text;
-                this.Close();
+
+                readwrite rw = new readwrite("homepage.txt");
+                rw.write("homepage.txt", urlInput.Text);
+                string newURL = File.ReadAllText("homepage.txt");
+                homeurl.GetURL = newURL;
+
+                this.Close(); ;
             };
 
             //event handler for enter button
             urlInput.Activated += (sender, e) =>
             {
-                homeurl.GetURL = urlInput.Text;
+                readwrite rw = new readwrite("homepage.txt");
+                rw.write("homepage.txt", urlInput.Text);
+                string newURL = File.ReadAllText("homepage.txt");
+                homeurl.GetURL = newURL;
+
                 this.Close();
             };
 

@@ -20,7 +20,7 @@ namespace Coursework
         private TextView display;
         //making URL objects
         private URL urlObj;
-        private URL homeUrl = new URL("https://www.hw.ac.uk");
+        private URL homeUrl;
 
         //objects for the download button
         private Entry fileInput;
@@ -43,6 +43,9 @@ namespace Coursework
             this.builder = builder;
             builder.Autoconnect(this);
 
+            readwrite readw = new readwrite("homepage.txt");
+            string homeUrlString = readw.read()[0];
+            homeUrl = new URL(homeUrlString);
 
             //adding the accelerator group for keyboard shortcuts
             //made for go home, refresh
@@ -60,11 +63,17 @@ namespace Coursework
 
             //back button
             Button backButton = (Button)builder.GetObject("PrevButton");
-            backButton.Clicked += (sender, e) => { goBack(); };
+            backButton.Clicked += (sender, e) =>
+            {
+                goBack();
+            };
 
             //forward button    
             Button forwardButton = (Button)builder.GetObject("NextButton");
-            forwardButton.Clicked += (sender, e) => { goNext(); };
+            forwardButton.Clicked += (sender, e) =>
+            {
+                goNext();
+            };
 
             //go button
             Button goButton = (Button)builder.GetObject("GoButton");
