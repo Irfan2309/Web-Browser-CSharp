@@ -44,15 +44,27 @@ namespace Coursework
             this.builder = builder;
             builder.Autoconnect(this);
 
-            readwrite readw = new readwrite("homepage.txt");
-            string homeUrlString = readw.read()[0];
+            //read the homepage file and set the homepage url at startup
+            readwrite readhome = new readwrite("homepage.txt");
+            string homeUrlString = readhome.read()[0];
             homeUrl = new URL(homeUrlString);
 
-            readwrite readw2 = new readwrite("history.txt");
-            string[] historyUrls = readw2.read();
+            //read the history file and add the urls to the history list at startup
+            readwrite readhistory = new readwrite("history.txt");
+            string[] historyUrls = readhistory.read();
             foreach (string url in historyUrls)
             {
                 historyUpdate(new URL(url));
+            }
+
+            readwrite readfavorites = new readwrite("favorites.txt");
+            string[] favoritesUrls = readfavorites.read();
+            foreach (string url in favoritesUrls)
+            {
+                //each line stores the name and url of the favorite, split the line and create a new favorite object
+                string[] favorite = url.Split(',');
+                favorites newFavorite = new favorites(favorite[0], favorite[1]);
+                favoritesList.Add(newFavorite);
             }
 
             //adding the accelerator group for keyboard shortcuts
@@ -124,7 +136,8 @@ namespace Coursework
             {
                 //clear the history list and update the UI
                 history.Clear();
-                readw2.write("history.txt", "");
+                //clear the history file
+                readhistory.write("history.txt", "");
                 this.index = 0;
                 updateHistoryUI(history, builder);
             };
@@ -472,7 +485,10 @@ namespace Coursework
 
         private void Window_DeleteEvent(object sender, DeleteEventArgs a)
         {
-            File.AppendAllLines("history.txt", history.ConvertAll(x => x.GetURL));
+            //write the history list to the history file at the end of the session  
+            File.WriteAllLines("history.txt", history.ConvertAll(x => x.GetURL));
+            //write the favorites list to the favorites file at the end of the session
+            File.WriteAllLines("favorites.txt", favoritesList.ConvertAll(x => x.getName + "," + x.getUrl.GetURL));
             Gtk.Application.Quit();
         }
     }
