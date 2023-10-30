@@ -27,10 +27,14 @@ namespace Coursework
             //event handler for clicking the submit button
             submitButton.Clicked += (sender, e) =>
             {
-
+                //write the new url to the homepage.txt file
                 readwrite rw = new readwrite("homepage.txt");
                 rw.write("homepage.txt", urlInput.Text);
+
+                //set the new url to the homeurl variable
                 string newURL = File.ReadAllText("homepage.txt");
+
+                //set the new url to the homeurl variable
                 homeurl.GetURL = newURL;
 
                 this.Close(); ;
@@ -39,12 +43,17 @@ namespace Coursework
             //event handler for enter button
             urlInput.Activated += (sender, e) =>
             {
+                //write the new url to the homepage.txt file
                 readwrite rw = new readwrite("homepage.txt");
                 rw.write("homepage.txt", urlInput.Text);
+
+                //set the new url to the homeurl variable
                 string newURL = File.ReadAllText("homepage.txt");
+
+                //set the new url to the homeurl variable
                 homeurl.GetURL = newURL;
 
-                this.Close();
+                this.Close(); ;
             };
 
             //event handler for clicking the cancel button

@@ -5,6 +5,7 @@ using Coursework;
 using Gdk;
 using System.Runtime.CompilerServices;
 using GLib;
+using System.IO;
 
 namespace Coursework
 {
@@ -46,6 +47,13 @@ namespace Coursework
             readwrite readw = new readwrite("homepage.txt");
             string homeUrlString = readw.read()[0];
             homeUrl = new URL(homeUrlString);
+
+            readwrite readw2 = new readwrite("history.txt");
+            string[] historyUrls = readw2.read();
+            foreach (string url in historyUrls)
+            {
+                historyUpdate(new URL(url));
+            }
 
             //adding the accelerator group for keyboard shortcuts
             //made for go home, refresh
@@ -116,6 +124,7 @@ namespace Coursework
             {
                 //clear the history list and update the UI
                 history.Clear();
+                readw2.write("history.txt", "");
                 this.index = 0;
                 updateHistoryUI(history, builder);
             };
@@ -135,6 +144,7 @@ namespace Coursework
             updateHistoryUI(history, builder);
             updateFavoritesUI(favoritesList, builder);
 
+            this.DeleteEvent += Window_DeleteEvent;
         }
 
         //------------------------------------------------------------------------------------
@@ -205,6 +215,7 @@ namespace Coursework
                 {
                     history.Add(urlObj);
                     index++;
+
                 }
                 else
             //if the page you're adding isnt already latest in the history, add it to the history
@@ -251,6 +262,8 @@ namespace Coursework
         }
 
         //function to update the history popover
+
+
         private void updateHistoryUI(List<URL> history, Builder builder)
         {
             //get the history grid from the builder
@@ -455,8 +468,11 @@ namespace Coursework
 
         //------------------------------------------------------------------------------------
         //------------------------------------------------------------------------------------
+
+
         private void Window_DeleteEvent(object sender, DeleteEventArgs a)
         {
+            File.AppendAllLines("history.txt", history.ConvertAll(x => x.GetURL));
             Gtk.Application.Quit();
         }
     }
