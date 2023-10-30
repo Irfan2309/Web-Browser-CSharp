@@ -55,7 +55,7 @@ namespace Coursework
             {
                 favorites favorite = favoritesList[index - 1];
                 urlInput.Text = favorite.getUrl.GetURL;
-                nameInput.Text = favorite.getUrl.GetPageTitle;
+                nameInput.Text = favorite.getName;
             }
 
             //event handler for clicking the add button
